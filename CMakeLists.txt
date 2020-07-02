@@ -40,4 +40,4 @@ add_subdirectory(NovusCore/NovusCore-Common)
 include(${COMMON_ROOT}/cmake/Configuration.cmake)
 include(${COMMON_ROOT}/cmake/FindFiles.cmake)
 
-add_subdirectory(region)
+add_subdirectory(src)
