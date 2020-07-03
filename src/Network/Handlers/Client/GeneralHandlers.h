@@ -10,6 +10,6 @@ namespace Client
     {
     public:
         static void Setup(MessageHandler*);
-        static bool MSG_REQUEST_ADDRESS(std::shared_ptr<NetworkClient>, NetworkPacket*);
+        static bool HandleRequestAddress(std::shared_ptr<NetworkClient>, NetworkPacket*);
     };
 }

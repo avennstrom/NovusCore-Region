@@ -12,16 +12,16 @@ namespace InternalSocket
 {
     void GeneralHandlers::Setup(MessageHandler* messageHandler)
     {
-        messageHandler->SetMessageHandler(Opcode::SMSG_CONNECTED, { ConnectionStatus::AUTH_SUCCESS, 0, GeneralHandlers::SMSG_CONNECTED });
-        messageHandler->SetMessageHandler(Opcode::SMSG_SEND_ADDRESS, { ConnectionStatus::CONNECTED, 1, GeneralHandlers::SMSG_SEND_ADDRESS });
+        messageHandler->SetMessageHandler(Opcode::SMSG_CONNECTED, { ConnectionStatus::AUTH_SUCCESS, 0, GeneralHandlers::HandleConnected });
+        messageHandler->SetMessageHandler(Opcode::SMSG_SEND_ADDRESS, { ConnectionStatus::CONNECTED, 1, GeneralHandlers::HandleSendAddress });
     }
 
-    bool GeneralHandlers::SMSG_CONNECTED(std::shared_ptr<NetworkClient> networkClient, NetworkPacket* packet)
+    bool GeneralHandlers::HandleConnected(std::shared_ptr<NetworkClient> networkClient, NetworkPacket* packet)
     {
         networkClient->SetStatus(ConnectionStatus::CONNECTED);
         return true;
     }
-    bool GeneralHandlers::SMSG_SEND_ADDRESS(std::shared_ptr<NetworkClient> networkClient, NetworkPacket* packet)
+    bool GeneralHandlers::HandleSendAddress(std::shared_ptr<NetworkClient> networkClient, NetworkPacket* packet)
     {
         u8 status = 0;
         u32 address = 0;

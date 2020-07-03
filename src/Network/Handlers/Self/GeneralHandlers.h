@@ -10,7 +10,7 @@ namespace InternalSocket
     {
     public:
         static void Setup(MessageHandler*);
-        static bool SMSG_CONNECTED(std::shared_ptr<NetworkClient>, NetworkPacket*);
-        static bool SMSG_SEND_ADDRESS(std::shared_ptr<NetworkClient>, NetworkPacket*);
+        static bool HandleConnected(std::shared_ptr<NetworkClient>, NetworkPacket*);
+        static bool HandleSendAddress(std::shared_ptr<NetworkClient>, NetworkPacket*);
     };
 }

@@ -12,10 +12,10 @@ namespace Client
 {
     void GeneralHandlers::Setup(MessageHandler* messageHandler)
     {
-        messageHandler->SetMessageHandler(Opcode::MSG_REQUEST_ADDRESS, { ConnectionStatus::AUTH_NONE, 0, GeneralHandlers::MSG_REQUEST_ADDRESS });
+        messageHandler->SetMessageHandler(Opcode::MSG_REQUEST_ADDRESS, { ConnectionStatus::AUTH_NONE, 0, GeneralHandlers::HandleRequestAddress });
     }
 
-    bool GeneralHandlers::MSG_REQUEST_ADDRESS(std::shared_ptr<NetworkClient> networkClient, NetworkPacket* packet)
+    bool GeneralHandlers::HandleRequestAddress(std::shared_ptr<NetworkClient> networkClient, NetworkPacket* packet)
     {
         // We expect an empty packet
         if (packet->header.size > 0)
