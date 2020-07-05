@@ -19,7 +19,7 @@ namespace InternalSocket
         messageHandler->SetMessageHandler(Opcode::SMSG_LOGON_CHALLENGE, { ConnectionStatus::AUTH_CHALLENGE, sizeof(ServerLogonChallenge), AuthHandlers::HandshakeHandler });
         messageHandler->SetMessageHandler(Opcode::SMSG_LOGON_HANDSHAKE, { ConnectionStatus::AUTH_HANDSHAKE, sizeof(ServerLogonHandshake), AuthHandlers::HandshakeResponseHandler });
     }
-    bool AuthHandlers::HandshakeHandler(std::shared_ptr<NetworkClient> networkClient, NetworkPacket* packet)
+    bool AuthHandlers::HandshakeHandler(std::shared_ptr<NetworkClient> networkClient, std::shared_ptr<NetworkPacket>& packet)
     {
         ServerLogonChallenge logonChallenge;
         logonChallenge.Deserialize(packet->payload);
@@ -44,12 +44,12 @@ namespace InternalSocket
 
         u16 payloadSize = clientResponse.Serialize(buffer);
         buffer->Put<u16>(payloadSize, 2);
-        networkClient->Send(buffer.get());
+        networkClient->Send(buffer);
 
         networkClient->SetStatus(ConnectionStatus::AUTH_HANDSHAKE);
         return true;
     }
-    bool AuthHandlers::HandshakeResponseHandler(std::shared_ptr<NetworkClient> networkClient, NetworkPacket* packet)
+    bool AuthHandlers::HandshakeResponseHandler(std::shared_ptr<NetworkClient> networkClient, std::shared_ptr<NetworkPacket>& packet)
     {
         // Handle handshake response
         ServerLogonHandshake logonResponse;
@@ -80,7 +80,7 @@ namespace InternalSocket
         buffer->PutU32(localEndpoint.address().to_v4().to_uint());
         buffer->PutU16(server->GetPort());
 
-        networkClient->Send(buffer.get());
+        networkClient->Send(buffer);
 
         networkClient->SetStatus(ConnectionStatus::AUTH_SUCCESS);
         return true;

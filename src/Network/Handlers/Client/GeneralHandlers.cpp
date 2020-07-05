@@ -15,7 +15,7 @@ namespace Client
         messageHandler->SetMessageHandler(Opcode::MSG_REQUEST_ADDRESS, { ConnectionStatus::AUTH_NONE, 0, GeneralHandlers::HandleRequestAddress });
     }
 
-    bool GeneralHandlers::HandleRequestAddress(std::shared_ptr<NetworkClient> networkClient, NetworkPacket* packet)
+    bool GeneralHandlers::HandleRequestAddress(std::shared_ptr<NetworkClient> networkClient, std::shared_ptr<NetworkPacket>& packet)
     {
         // We expect an empty packet
         if (packet->header.size > 0)
@@ -28,7 +28,7 @@ namespace Client
         // Send the buffer to the Novus Service
         entt::registry* registry = ServiceLocator::GetRegistry();
         auto& connection = registry->ctx<ConnectionSingleton>();
-        connection.networkClient->Send(buffer.get());
+        connection.networkClient->Send(buffer);
 
         return true;
     }
