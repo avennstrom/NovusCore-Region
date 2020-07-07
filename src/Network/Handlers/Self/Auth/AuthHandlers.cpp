@@ -72,8 +72,9 @@ namespace InternalSocket
 
         std::shared_ptr<Bytebuffer> buffer = Bytebuffer::Borrow<128>();
         buffer->Put(Opcode::CMSG_CONNECTED);
-        buffer->PutU16(7);
+        buffer->PutU16(8);
         buffer->Put(AddressType::REGION);
+        buffer->PutU8(0);
 
         std::shared_ptr<NetworkServer> server = connectionDeferredSingleton.networkServer;
         auto& localEndpoint = networkClient->socket()->local_endpoint();
