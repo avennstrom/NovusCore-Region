@@ -21,7 +21,7 @@ void ConnectionUpdateSystem::Update(entt::registry& registry)
         while (connectionSingleton.packetQueue.try_dequeue(packet))
         {
 #ifdef NC_Debug
-            NC_LOG_SUCCESS("[Network/ClientSocket]: CMD: %u, Size: %u", packet->header.opcode, packet->header.size);
+            DebugHandler::PrintSuccess("[Network/ClientSocket]: CMD: %u, Size: %u", packet->header.opcode, packet->header.size);
 #endif // NC_Debug
 
             if (!networkMessageHandler->CallHandler(connectionSingleton.networkClient, packet))
@@ -40,7 +40,7 @@ void ConnectionUpdateSystem::Update(entt::registry& registry)
             while (connection.packetQueue.try_dequeue(packet))
             {
 #ifdef NC_Debug
-                NC_LOG_SUCCESS("[Network/ServerSocket]: CMD: %u, Size: %u", packet->header.opcode, packet->header.size);
+                DebugHandler::PrintSuccess("[Network/ServerSocket]: CMD: %u, Size: %u", packet->header.opcode, packet->header.size);
 #endif // NC_Debug
 
                 if (!clientMessageHandler->CallHandler(connection.connection, packet))
@@ -57,7 +57,7 @@ void ConnectionUpdateSystem::Server_HandleConnect(NetworkServer* server, asio::i
     if (!error)
     {
 #ifdef NC_Debug
-        NC_LOG_SUCCESS("[Network/Socket]: Client connected from (%s)", socket->remote_endpoint().address().to_string().c_str());
+        DebugHandler::PrintSuccess("[Network/Socket]: Client connected from (%s)", socket->remote_endpoint().address().to_string().c_str());
 #endif // NC_Debug
 
         socket->non_blocking(true);
@@ -125,7 +125,7 @@ void ConnectionUpdateSystem::Client_HandleRead(BaseSocket* socket)
 void ConnectionUpdateSystem::Client_HandleDisconnect(BaseSocket* socket)
 {
 #ifdef NC_Debug
-    NC_LOG_WARNING("[Network/Socket]: Client disconnected from (%s)", socket->socket()->remote_endpoint().address().to_string().c_str());
+    DebugHandler::PrintWarning("[Network/Socket]: Client disconnected from (%s)", socket->socket()->remote_endpoint().address().to_string().c_str());
 #endif // NC_Debug
 
     entt::registry* registry = ServiceLocator::GetRegistry();
@@ -139,7 +139,7 @@ void ConnectionUpdateSystem::Self_HandleConnect(BaseSocket* socket, bool connect
     if (connected)
     {
 #ifdef NC_Debug
-        NC_LOG_SUCCESS("[Network/Socket]: Successfully connected to (%s, %u)", socket->socket()->remote_endpoint().address().to_string().c_str(), socket->socket()->remote_endpoint().port());
+        DebugHandler::PrintSuccess("[Network/Socket]: Successfully connected to (%s, %u)", socket->socket()->remote_endpoint().address().to_string().c_str(), socket->socket()->remote_endpoint().port());
 #endif // NC_Debug
 
         entt::registry* registry = ServiceLocator::GetRegistry();
@@ -174,7 +174,7 @@ void ConnectionUpdateSystem::Self_HandleConnect(BaseSocket* socket, bool connect
     else
     {
 #ifdef NC_Debug
-        NC_LOG_WARNING("[Network/Socket]: Failed connecting to (%s, %u)", socket->socket()->remote_endpoint().address().to_string().c_str(), socket->socket()->remote_endpoint().port());
+        DebugHandler::PrintWarning("[Network/Socket]: Failed connecting to (%s, %u)", socket->socket()->remote_endpoint().address().to_string().c_str(), socket->socket()->remote_endpoint().port());
 #endif // NC_Debug
     }
 }
@@ -230,7 +230,7 @@ void ConnectionUpdateSystem::Self_HandleRead(BaseSocket* socket)
 void ConnectionUpdateSystem::Self_HandleDisconnect(BaseSocket* socket)
 {
 #ifdef NC_Debug
-    NC_LOG_WARNING("[Network/Socket]: Disconnected from (%s, %u)", socket->socket()->remote_endpoint().address().to_string().c_str(), socket->socket()->remote_endpoint().port());
+    DebugHandler::PrintWarning("[Network/Socket]: Disconnected from (%s, %u)", socket->socket()->remote_endpoint().address().to_string().c_str(), socket->socket()->remote_endpoint().port());
 #endif // NC_Debug
 }
 

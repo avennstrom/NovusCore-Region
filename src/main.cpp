@@ -37,7 +37,7 @@ i32 main()
             }
             else if (message.code == MSG_OUT_PRINT)
             {
-                NC_LOG_MESSAGE(*message.message);
+                DebugHandler::Print(*message.message);
                 delete message.message;
             }
         }

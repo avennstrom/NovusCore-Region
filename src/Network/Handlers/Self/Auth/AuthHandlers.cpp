@@ -61,13 +61,13 @@ namespace InternalSocket
 
         if (!authenticationSingleton.srp.VerifySession(logonResponse.HAMK))
         {
-            NC_LOG_WARNING("Unsuccessful Login");
+            DebugHandler::PrintWarning("Unsuccessful Login");
             networkClient->Close(asio::error::no_permission);
             return true;
         }
         else
         {
-            NC_LOG_SUCCESS("Successful Login");
+            DebugHandler::PrintSuccess("Successful Login");
         }
 
         std::shared_ptr<Bytebuffer> buffer = Bytebuffer::Borrow<128>();
