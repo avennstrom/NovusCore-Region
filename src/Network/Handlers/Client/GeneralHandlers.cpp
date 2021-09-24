@@ -1,4 +1,4 @@
-#include "..\..\..\..\..\NovusCore-LoadBalancer\src\Network\Handlers\GeneralHandlers.h"
+#include "../../../../../NovusCore-LoadBalancer/src/Network/Handlers/GeneralHandlers.h"
 #include "GeneralHandlers.h"
 #include <Networking/MessageHandler.h>
 #include <Networking/NetworkPacket.h>

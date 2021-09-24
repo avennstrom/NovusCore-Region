@@ -77,7 +77,7 @@ namespace InternalSocket
         buffer->PutU8(0);
 
         std::shared_ptr<NetworkServer> server = connectionDeferredSingleton.networkServer;
-        auto& localEndpoint = networkClient->socket()->local_endpoint();
+        auto localEndpoint = networkClient->socket()->local_endpoint();
         buffer->PutU32(localEndpoint.address().to_v4().to_uint());
         buffer->PutU16(server->GetPort());
 
